@@ -1,0 +1,573 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		6490713B2D9FA4F50099269B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 649071222D9FA4F30099269B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 649071292D9FA4F30099269B;
+			remoteInfo = BidEase;
+		};
+		649071452D9FA4F50099269B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 649071222D9FA4F30099269B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 649071292D9FA4F30099269B;
+			remoteInfo = BidEase;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6490712A2D9FA4F30099269B /* Bidify_AuctionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bidify_AuctionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6490713A2D9FA4F50099269B /* Bidify_AuctionAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Bidify_AuctionAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		649071442D9FA4F50099269B /* Bidify_AuctionAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Bidify_AuctionAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		780CE3482DC650D000D88212 /* Exceptions for "Bidify" folder in "Bidify_AuctionApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				BidifyTests/BidifyTests.swift,
+				BidifyUITests/BidifyUITests.swift,
+				BidifyUITests/BidifyUITestsLaunchTests.swift,
+			);
+			target = 649071292D9FA4F30099269B /* Bidify_AuctionApp */;
+		};
+		780CE3492DC650D000D88212 /* Exceptions for "Bidify" folder in "Bidify_AuctionAppTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				BidifyTests/BidifyTests.swift,
+			);
+			target = 649071392D9FA4F50099269B /* Bidify_AuctionAppTests */;
+		};
+		780CE34A2DC6510900D88212 /* Exceptions for "Bidify" folder in "Bidify_AuctionAppUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				BidifyUITests/BidifyUITests.swift,
+				BidifyUITests/BidifyUITestsLaunchTests.swift,
+			);
+			target = 649071432D9FA4F50099269B /* Bidify_AuctionAppUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6490712C2D9FA4F30099269B /* Bidify */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				780CE3482DC650D000D88212 /* Exceptions for "Bidify" folder in "Bidify_AuctionApp" target */,
+				780CE3492DC650D000D88212 /* Exceptions for "Bidify" folder in "Bidify_AuctionAppTests" target */,
+				780CE34A2DC6510900D88212 /* Exceptions for "Bidify" folder in "Bidify_AuctionAppUITests" target */,
+			);
+			path = Bidify;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		649071272D9FA4F30099269B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649071372D9FA4F50099269B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649071412D9FA4F50099269B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		649071212D9FA4F30099269B = {
+			isa = PBXGroup;
+			children = (
+				6490712C2D9FA4F30099269B /* Bidify */,
+				6490712B2D9FA4F30099269B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6490712B2D9FA4F30099269B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6490712A2D9FA4F30099269B /* Bidify_AuctionApp.app */,
+				6490713A2D9FA4F50099269B /* Bidify_AuctionAppTests.xctest */,
+				649071442D9FA4F50099269B /* Bidify_AuctionAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		649071292D9FA4F30099269B /* Bidify_AuctionApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6490714E2D9FA4F50099269B /* Build configuration list for PBXNativeTarget "Bidify_AuctionApp" */;
+			buildPhases = (
+				649071262D9FA4F30099269B /* Sources */,
+				649071272D9FA4F30099269B /* Frameworks */,
+				649071282D9FA4F30099269B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6490712C2D9FA4F30099269B /* Bidify */,
+			);
+			name = Bidify_AuctionApp;
+			packageProductDependencies = (
+			);
+			productName = BidEase;
+			productReference = 6490712A2D9FA4F30099269B /* Bidify_AuctionApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		649071392D9FA4F50099269B /* Bidify_AuctionAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 649071512D9FA4F50099269B /* Build configuration list for PBXNativeTarget "Bidify_AuctionAppTests" */;
+			buildPhases = (
+				649071362D9FA4F50099269B /* Sources */,
+				649071372D9FA4F50099269B /* Frameworks */,
+				649071382D9FA4F50099269B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6490713C2D9FA4F50099269B /* PBXTargetDependency */,
+			);
+			name = Bidify_AuctionAppTests;
+			packageProductDependencies = (
+			);
+			productName = BidEaseTests;
+			productReference = 6490713A2D9FA4F50099269B /* Bidify_AuctionAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		649071432D9FA4F50099269B /* Bidify_AuctionAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 649071542D9FA4F50099269B /* Build configuration list for PBXNativeTarget "Bidify_AuctionAppUITests" */;
+			buildPhases = (
+				649071402D9FA4F50099269B /* Sources */,
+				649071412D9FA4F50099269B /* Frameworks */,
+				649071422D9FA4F50099269B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				649071462D9FA4F50099269B /* PBXTargetDependency */,
+			);
+			name = Bidify_AuctionAppUITests;
+			packageProductDependencies = (
+			);
+			productName = BidEaseUITests;
+			productReference = 649071442D9FA4F50099269B /* Bidify_AuctionAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		649071222D9FA4F30099269B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					649071292D9FA4F30099269B = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					649071392D9FA4F50099269B = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 649071292D9FA4F30099269B;
+					};
+					649071432D9FA4F50099269B = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 649071292D9FA4F30099269B;
+					};
+				};
+			};
+			buildConfigurationList = 649071252D9FA4F30099269B /* Build configuration list for PBXProject "Bidify_AuctionApp" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 649071212D9FA4F30099269B;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6490712B2D9FA4F30099269B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				649071292D9FA4F30099269B /* Bidify_AuctionApp */,
+				649071392D9FA4F50099269B /* Bidify_AuctionAppTests */,
+				649071432D9FA4F50099269B /* Bidify_AuctionAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		649071282D9FA4F30099269B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649071382D9FA4F50099269B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649071422D9FA4F50099269B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		649071262D9FA4F30099269B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649071362D9FA4F50099269B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649071402D9FA4F50099269B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6490713C2D9FA4F50099269B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 649071292D9FA4F30099269B /* Bidify_AuctionApp */;
+			targetProxy = 6490713B2D9FA4F50099269B /* PBXContainerItemProxy */;
+		};
+		649071462D9FA4F50099269B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 649071292D9FA4F30099269B /* Bidify_AuctionApp */;
+			targetProxy = 649071452D9FA4F50099269B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6490714C2D9FA4F50099269B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = R4Y2TF328P;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6490714D2D9FA4F50099269B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = R4Y2TF328P;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6490714F2D9FA4F50099269B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Bidify/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gioglobe.mobilecore.BidEase;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		649071502D9FA4F50099269B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Bidify/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gioglobe.mobilecore.BidEase;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		649071522D9FA4F50099269B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gioglobe.mobilecore.BidEaseTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bidify_AuctionApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Bidify_AuctionApp";
+			};
+			name = Debug;
+		};
+		649071532D9FA4F50099269B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gioglobe.mobilecore.BidEaseTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bidify_AuctionApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Bidify_AuctionApp";
+			};
+			name = Release;
+		};
+		649071552D9FA4F50099269B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gioglobe.mobilecore.BidEaseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BidEase;
+			};
+			name = Debug;
+		};
+		649071562D9FA4F50099269B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gioglobe.mobilecore.BidEaseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BidEase;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		649071252D9FA4F30099269B /* Build configuration list for PBXProject "Bidify_AuctionApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6490714C2D9FA4F50099269B /* Debug */,
+				6490714D2D9FA4F50099269B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6490714E2D9FA4F50099269B /* Build configuration list for PBXNativeTarget "Bidify_AuctionApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6490714F2D9FA4F50099269B /* Debug */,
+				649071502D9FA4F50099269B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		649071512D9FA4F50099269B /* Build configuration list for PBXNativeTarget "Bidify_AuctionAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				649071522D9FA4F50099269B /* Debug */,
+				649071532D9FA4F50099269B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		649071542D9FA4F50099269B /* Build configuration list for PBXNativeTarget "Bidify_AuctionAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				649071552D9FA4F50099269B /* Debug */,
+				649071562D9FA4F50099269B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 649071222D9FA4F30099269B /* Project object */;
+}
