@@ -12,14 +12,17 @@ struct CartViewContentView: View {
     @State private var cartItems: [BidItem] = [
         BidItem(id: 1, name: "MacBook Pro", quantity: 1, highestBid: 0, imageName: "laptopcomputer",
                 description: "Powerful Apple M2 chip laptop", condition: "Brand New",
+                category: "Electronics",
                 addedDate: Date().addingTimeInterval(-7200), lastBidTime: Date()),
         
         BidItem(id: 2, name: "Samsung Galaxy S23", quantity: 1, highestBid: 0, imageName: "iphone",
                 description: "Latest flagship smartphone from Samsung", condition: "Refurbished",
+                category: "Electronics",
                 addedDate: Date().addingTimeInterval(-86400), lastBidTime: Date()),
 
         BidItem(id: 3, name: "Sony Headphones", quantity: 1, highestBid: 0, imageName: "headphones",
                 description: "Noise Cancelling Over-ear Headphones", condition: "Brand New",
+                category: "Electronics",
                 addedDate: Date().addingTimeInterval(-3600), lastBidTime: Date())
     ]
 
@@ -108,7 +111,7 @@ struct CartViewContentView: View {
                     Text("Your Cart Items")
                         .font(.title3)
                         .fontWeight(.bold)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primaryColor)
                 }
             }
             .background(Color(.systemGray6).ignoresSafeArea())

@@ -209,6 +209,7 @@ struct ItemContentView_Previews: PreviewProvider {
                 imageName: "iphone",
                 description: "Latest iPhone model with advanced features.",
                 condition: "Brand New",
+                category: "Electronics",
                 addedDate: Date().addingTimeInterval(-86400),
                 lastBidTime: Date().addingTimeInterval(-3600)
             ))

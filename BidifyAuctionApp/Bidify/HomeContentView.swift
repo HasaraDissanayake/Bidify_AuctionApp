@@ -2,7 +2,7 @@
 //  HomeContentView.swift
 //  Bidify_AuctionApp
 //
-//  Created by user271456 on 5/4/25.
+//  Created by Hasara Dissanayake on 5/4/25.
 //
 
 import SwiftUI
@@ -88,6 +88,7 @@ struct HomeView: View {
             imageName: "iphone",
             description: "Latest iPhone model with advanced features.",
             condition: "Brand New",
+            category: "Electronics",
             addedDate: Date().addingTimeInterval(-86400),
             lastBidTime: Date().addingTimeInterval(-3600)
         ),
@@ -99,11 +100,23 @@ struct HomeView: View {
             imageName: "laptopcomputer",
             description: "Refurbished 16-inch MacBook Pro with M2 chip.",
             condition: "Refurbished",
+            category: "Electronics",
             addedDate: Date().addingTimeInterval(-172800),
             lastBidTime: Date().addingTimeInterval(-7200)
         )
     ]
+    @State private var selectedCategory: String = "All"
+        @State private var showFilterSheet = false
 
+        var categories: [String] = ["All", "Art", "Collectables", "Fashion", "Antiques", "Electronics", "Jewelry", "Sports Memos", "Furniture", "Raw Items", "Others"]
+
+        var filteredItems: [BidItem] {
+            if selectedCategory == "All" {
+                return bidItems
+            } else {
+                return bidItems.filter { $0.category == selectedCategory }
+            }
+        }
     var body: some View {
         VStack(spacing: 0) {
             // AppBar
@@ -121,6 +134,18 @@ struct HomeView: View {
                         .frame(width: 24, height: 24)
                         .foregroundColor(.primaryColor)
                 }
+                Button(action: {
+                                    showFilterSheet = true
+                                }) {
+                                    Image(systemName: "line.horizontal.3.decrease")
+                                        .resizable()
+                                        .frame(width: 24, height: 17)
+                                        .padding(.leading, 10)
+                                        .foregroundColor(.primaryColor)
+                                }
+                                .sheet(isPresented: $showFilterSheet) {
+                                    FilterSheetView(selectedCategory: $selectedCategory, categories: categories)
+                                }
             }
             .padding()
             .background(Color.white)
@@ -129,7 +154,7 @@ struct HomeView: View {
             // Item List
             ScrollView {
                 VStack(spacing: 16) {
-                    ForEach(bidItems) { item in
+                    ForEach(filteredItems) { item in
                         BidItemCard(item: item)
                     }
                 }
@@ -140,6 +165,56 @@ struct HomeView: View {
         }
         .background(Color.backgroundColor.ignoresSafeArea())
         .navigationBarHidden(true)
+    }
+}
+// MARK: - Filter Sheet View
+struct FilterSheetView: View {
+    @Binding var selectedCategory: String
+    let categories: [String]
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(categories, id: \.self) { category in
+                    HStack {
+                        Text(category)
+                            .foregroundColor(.black)
+                            .padding(.vertical,5)
+                            .frame(maxWidth: .infinity)
+                            .cornerRadius(10)         .background(Color.primaryColor.opacity(0.5))
+                        Spacer()
+                        if category == selectedCategory {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.white)
+                                .padding(.vertical,5)
+                                .frame(maxWidth: .infinity)
+                            .cornerRadius(0)
+                            .background(Color.primaryColor)
+                        }
+                    }
+                    .contentShape(Rectangle())
+                    .frame(maxWidth: .infinity)
+                     .onTapGesture {
+                        selectedCategory = category
+                    }
+                }
+            }
+            .navigationTitle("Filter by Category")
+            .fontWeight(.semibold)
+            .frame(maxWidth: .infinity)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(action: {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        dismiss()
+                    }) {
+                        Text("Done")
+                            .foregroundColor(.teal)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -218,6 +293,7 @@ struct BidItem: Identifiable {
     let imageName: String
     let description: String
     let condition: String
+    let category: String
     let addedDate: Date
     let lastBidTime: Date
 }
