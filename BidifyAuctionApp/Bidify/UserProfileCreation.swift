@@ -1,217 +1,199 @@
 //
-//  ItemContentView.swift
+//  UserProfileCreation.swift
 //  Bidify
 //
-//  Created by Hasara Dissanayake on 2025-04-04.
+//  Created by Naween Weerasinghe on 2025-05-01.
 //
 
 import SwiftUI
+import Security
 
-// MARK: - Item Content View
-struct ItemContentView: View {
-    let item: BidItem
-    @State private var timeRemaining: TimeInterval = 259200 // 3 days countdown
-    @State private var timerActive: Bool = true
-    @State private var userBid: Double?
+struct UserProfileCreation: View {
+    @State private var fullName = ""
+    @State private var address = ""
+    @State private var idNumber = ""
+    @State private var mobileNumber = ""
+    @State private var email = ""
+    @State private var secondaryContact = ""
+    @State private var username = ""
+    @State private var password = ""
+    @State private var confirmPassword = ""
+    @State private var showAlert = false
+    @State private var showSuccessAlert = false
 
-    private let dateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.dateStyle = .medium
-        df.timeStyle = .short
-        return df
-    }()
+    var existingUsernames: [String] {
+        UserDefaults.standard.stringArray(forKey: "Usernames") ?? []
+    }
+
+    var isPasswordValid: Bool {
+        let pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"
+        return NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: password)
+    }
+
+    var isFormValid: Bool {
+        !fullName.isEmpty &&
+        !address.isEmpty &&
+        !idNumber.isEmpty &&
+        !mobileNumber.isEmpty &&
+        !username.isEmpty &&
+        !password.isEmpty &&
+        password == confirmPassword &&
+        isPasswordValid &&
+        !existingUsernames.contains(username)
+    }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            
-            // MARK: - Item Header (Image, Description & Add to Cart)
-            HStack(spacing: 12) {
-                Image(systemName: item.imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .shadow(radius: 2)
-
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(item.name)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-
-                    Text(item.description)
-                        .font(.body)
-                        .foregroundColor(.gray)
-                        .lineLimit(2)
+        NavigationView {
+            Form {
+                Section(header: Text("Personal Information").foregroundColor(.teal)) {
+                    TextField("Full Name *", text: $fullName)
+                    TextField("Address *", text: $address)
+                    TextField("ID Number *", text: $idNumber)
+                    TextField("Mobile Number *", text: $mobileNumber)
+                        .keyboardType(.phonePad)
                 }
 
-                Spacer()
-
-                // Add to Cart Button (Top Right)
-                Button(action: {
-                    print("Added to Cart")
-                }) {
-                    Image(systemName: "cart.badge.plus")
-                        .font(.system(size: 22))
-                        .foregroundColor(.blue)
-                        .padding(10)
-                        .background(Color.white)
-                        .clipShape(Circle())
-                        .shadow(radius: 2)
-                }
-            }
-
-            // MARK: - Countdown Timer
-            Text("Time Remaining: \(timeFormatted(timeRemaining))")
-                .font(.headline)
-                .foregroundColor(.red)
-                .onAppear {
-                    startCountdown()
+                Section(header: Text("Optional Information").foregroundColor(.teal)) {
+                    TextField("Email", text: $email)
+                    TextField("Secondary Contact Number", text: $secondaryContact)
+                        .keyboardType(.phonePad)
                 }
 
-            // MARK: - Item Details Section
-            VStack(alignment: .leading, spacing: 6) {
-                categorySection(title: "Shipping Details", content: [
-                    detailRow(title: "Seller", value: "John Doe Auctions"),
-                    detailRow(title: "Warranty", value: "6 Months Manufacturer Warranty"),
-                    detailRow(title: "Shipping", value: "Available in USA & Canada"),
-                    detailRow(title: "Location", value: "New York, USA")
-                ])
-
-                categorySection(title: "Price & Bids", content: [
-                    detailRow(title: "Highest Bid", value: "$\(String(format: "%.2f", item.highestBid))"),
-                    detailRow(title: "Your Bid", value: userBid != nil ? "$\(String(format: "%.2f", userBid!))" : "Not Placed")
-                ])
-
-                categorySection(title: "Reviews", content: [
-                    detailRow(title: "User Ratings", value: "Rated: 4.2/5 (250 Reviews)"),
-                    detailRow(title: "Last Bid Time", value: dateFormatter.string(from: item.lastBidTime))
-                ])
-
-                categorySection(title: "Product Details", content: [
-                    detailRow(title: "Condition", value: item.condition),
-                    detailRow(title: "Added", value: dateFormatter.string(from: item.addedDate))
-                ])
-            }
-
-            // MARK: - Buttons
-            HStack(spacing: 10) {
-                Button(action: {
-                    timerActive = false
-                }) {
-                    Text("Cancel")
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                Section(header: Text("Account Credentials").foregroundColor(.teal)) {
+                    TextField("Username *", text: $username)
+                    SecureField("Password *", text: $password)
+                        .textContentType(.newPassword) // ✅ Avoid autofill yellow suggestion
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                    SecureField("Confirm Password *", text: $confirmPassword)
+                        .textContentType(.newPassword)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
                 }
 
-                Button(action: {}) {
-                    Text("Bid")
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.gray.opacity(0.6)) // Disabled
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .disabled(true)
-            }
-
-            Spacer()
-        }
-        .padding()
-        .background(Color.white.ignoresSafeArea())
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                HStack {
-                    Button(action: {
-                        // Go back
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .font(.title2)
-                            .foregroundColor(.blue)
+                if !isPasswordValid && !password.isEmpty {
+                    Section {
+                        Text("Password must be at least 8 characters and include:\n- 1 uppercase letter\n- 1 lowercase letter\n- 1 number\n- 1 special character.")
+                            .foregroundColor(.red)
+                            .font(.footnote)
                     }
-                    Text(item.name)
-                        .font(.headline)
-                        .foregroundColor(.black)
+                }
+
+                if existingUsernames.contains(username) && !username.isEmpty {
+                    Section {
+                        Text("Username is already taken. Please choose another.")
+                            .foregroundColor(.red)
+                            .font(.footnote)
+                    }
+                }
+
+                Section {
+                    Button(action: {
+                        if isFormValid {
+                            saveUserData()
+                            showSuccessAlert = true
+                            clearForm()
+                        } else {
+                            showAlert = true
+                        }
+                    }) {
+                        Text("Create Account")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(isFormValid ? Color.teal : Color.gray.opacity(0.4))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .font(.headline)
+                    }
+                    .disabled(!isFormValid)
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Incomplete or Invalid Form"),
+                            message: Text("Please ensure all required fields are filled and valid."),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
+                    .alert("Account Created", isPresented: $showSuccessAlert) {
+                        Button("OK", role: .cancel) {}
+                    } message: {
+                        Text("Your account has been successfully created.")
+                    }
                 }
             }
+            .navigationTitle("Create Account")
+            .navigationBarTitleDisplayMode(.inline)
+            .accentColor(.teal)
         }
     }
 
-    // MARK: - Timer Handling
-    private func startCountdown() {
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-            if timeRemaining > 0 && timerActive {
-                timeRemaining -= 1
-            } else {
-                timer.invalidate()
-            }
+    func saveUserData() {
+        UserDefaults.standard.set(fullName, forKey: "fullName")
+        UserDefaults.standard.set(address, forKey: "address")
+        UserDefaults.standard.set(idNumber, forKey: "idNumber")
+        UserDefaults.standard.set(mobileNumber, forKey: "mobileNumber")
+        UserDefaults.standard.set(email, forKey: "email")
+        UserDefaults.standard.set(secondaryContact, forKey: "secondaryContact")
+        UserDefaults.standard.set(username, forKey: "username")
+
+        KeychainHelper.standard.save(password, forKey: "password_\(username)")
+
+        var usernames = UserDefaults.standard.stringArray(forKey: "Usernames") ?? []
+        if !usernames.contains(username) {
+            usernames.append(username)
+            UserDefaults.standard.set(usernames, forKey: "Usernames")
         }
     }
 
-    // MARK: - Time Formatting
-    private func timeFormatted(_ time: TimeInterval) -> String {
-        let days = Int(time) / 86400
-        let hours = (Int(time) % 86400) / 3600
-        let minutes = (Int(time) % 3600) / 60
-        let seconds = Int(time) % 60
-        return "\(days)d \(hours)h \(minutes)m \(seconds)s"
-    }
-
-    // MARK: - Category Section
-    private func categorySection(title: String, content: [some View]) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(title)
-                .font(.headline)
-                .foregroundColor(.black)
-                .padding(.top, 4)
-
-            VStack(spacing: 4) {
-                ForEach(0..<content.count, id: \.self) { index in
-                    content[index]
-                }
-            }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(10)
-            .shadow(radius: 1)
-        }
-    }
-
-    // MARK: - Detail Row
-    private func detailRow(title: String, value: String) -> some View {
-        HStack {
-            Text(title + ":")
-                .fontWeight(.bold)
-            Spacer()
-            Text(value)
-        }
-        .font(.body)
-        .foregroundColor(.black)
+    func clearForm() {
+        fullName = ""
+        address = ""
+        idNumber = ""
+        mobileNumber = ""
+        email = ""
+        secondaryContact = ""
+        username = ""
+        password = ""
+        confirmPassword = ""
     }
 }
 
-// MARK: - Preview
-struct ItemContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            ItemContentView(item: BidItem(
-                id: 1,
-                name: "iPhone 14",
-                quantity: 1,
-                highestBid: 1200,
-                imageName: "iphone",
-                description: "Latest iPhone model with advanced features.",
-                condition: "Brand New",
-                addedDate: Date().addingTimeInterval(-86400),
-                lastBidTime: Date().addingTimeInterval(-3600)
-            ))
+#Preview {
+    UserProfileCreation()
+}
+
+// MARK: - Keychain Helper
+
+class KeychainHelper {
+    static let standard = KeychainHelper()
+
+    func save(_ value: String, forKey key: String) {
+        guard let data = value.data(using: .utf8) else { return }
+
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key,
+            kSecValueData as String: data
+        ]
+
+        SecItemDelete(query as CFDictionary)
+        SecItemAdd(query as CFDictionary, nil)
+    }
+
+    func retrieve(forKey key: String) -> String? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key,
+            kSecReturnData as String: true,
+            kSecMatchLimit as String: kSecMatchLimitOne
+        ]
+
+        var dataTypeRef: AnyObject?
+
+        if SecItemCopyMatching(query as CFDictionary, &dataTypeRef) == noErr {
+            if let data = dataTypeRef as? Data {
+                return String(data: data, encoding: .utf8)
+            }
         }
+        return nil
     }
 }

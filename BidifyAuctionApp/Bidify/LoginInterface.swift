@@ -7,114 +7,104 @@
 
 import SwiftUI
 
-struct UserProfileCreation: View {
-    @State private var fullName = ""
-    @State private var address = ""
-    @State private var idNumber = ""
-    @State private var mobileNumber = ""
-    @State private var email = ""
-    @State private var secondaryContact = ""
+struct LoginInterface: View {
     @State private var username = ""
     @State private var password = ""
-    @State private var confirmPassword = ""
-    @State private var showAlert = false
-
-    private let existingUsernames = ["user123", "john_doe", "alice_smith"] // Simulated usernames
-
-    var isPasswordValid: Bool {
-        let pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"
-        return NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: password)
-    }
-
-    var isFormValid: Bool {
-        !fullName.isEmpty &&
-        !address.isEmpty &&
-        !idNumber.isEmpty &&
-        !mobileNumber.isEmpty &&
-        !username.isEmpty &&
-        !password.isEmpty &&
-        password == confirmPassword &&
-        isPasswordValid &&
-        !existingUsernames.contains(username)
-    }
+    @State private var showError = false
+    @State private var errorMessage = ""
+    @State private var isLoggedIn = false
 
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("Personal Information").foregroundColor(.teal)) {
-                    TextField("Full Name *", text: $fullName)
-                    TextField("Address *", text: $address)
-                    TextField("ID Number *", text: $idNumber)
-                    TextField("Mobile Number *", text: $mobileNumber)
-                        .keyboardType(.phonePad)
+            VStack(spacing: 30) {
+                Spacer()
+
+                // App Logo/Title
+                VStack(spacing: 8) {
+                    Text("Bidify")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.teal)
+
+                    Text("Give value to your precious belongings")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
                 }
 
-                Section(header: Text("Optional Information").foregroundColor(.teal)) {
-                    TextField("Email", text: $email)
-                    TextField("Secondary Contact Number", text: $secondaryContact)
-                        .keyboardType(.phonePad)
+                // Input Fields
+                VStack(spacing: 20) {
+                    TextField("Username", text: $username)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+
+                    SecureField("Password", text: $password)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
+
+                // Error Message
+                if showError {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .font(.footnote)
                 }
 
-                Section(header: Text("Account Credentials").foregroundColor(.teal)) {
-                    TextField("Username *", text: $username)
-                    SecureField("Password *", text: $password)
-                    SecureField("Confirm Password *", text: $confirmPassword)
-                }
-
-                // Password validation message
-                if !isPasswordValid && !password.isEmpty {
-                    Section {
-                        Text("Password must be at least 8 characters and include:\n- 1 uppercase letter\n- 1 lowercase letter\n- 1 number\n- 1 special character.")
-                            .foregroundColor(.red)
-                            .font(.footnote)
+                // Login Button
+                Button(action: {
+                    if validateCredentials(username: username, password: password) {
+                        showError = false
+                        // Capture current user
+                        UserDefaults.standard.set(username, forKey: "currentUser")
+                        print("✅ Login successful for user: \(username)")
+                        isLoggedIn = true
+                        // Navigate to UserProfileView after successful login
+                    } else {
+                        showError = true
+                        errorMessage = "Invalid username or password. Please try again."
                     }
+                }) {
+                    Text("Login")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.teal)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .font(.headline)
                 }
+                .padding(.horizontal)
 
-                // Username taken warning
-                if existingUsernames.contains(username) && !username.isEmpty {
-                    Section {
-                        Text("Username is already taken. Please choose another.")
-                            .foregroundColor(.red)
-                            .font(.footnote)
-                    }
-                }
+                Spacer()
 
-                // Submit button
-                Section {
-                    Button(action: {
-                        if isFormValid {
-                            // Placeholder for success logic
-                            print("Account successfully created.")
-                        } else {
-                            showAlert = true
-                        }
-                    }) {
-                        Text("Create Account")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(isFormValid ? Color.teal : Color.gray.opacity(0.4))
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .font(.headline)
-                    }
-                    .disabled(!isFormValid)
-                    .alert(isPresented: $showAlert) {
-                        Alert(
-                            title: Text("Incomplete or Invalid Form"),
-                            message: Text("Please ensure all required fields are filled and valid."),
-                            dismissButton: .default(Text("OK"))
-                        )
-                    }
-                }
+                // Navigate to Create Account page
+                NavigationLink("Create Account", destination: UserProfileCreation())
+                    .font(.subheadline)
+                    .padding()
+
             }
-            .navigationTitle("Create Account")
+            .padding()
+            .navigationTitle("Login")
             .navigationBarTitleDisplayMode(.inline)
             .accentColor(.teal)
         }
     }
+
+    // Validate the entered credentials against stored data in UserDefaults
+    func validateCredentials(username: String, password: String) -> Bool {
+        // Retrieve the saved username and password from UserDefaults
+        let storedUsername = UserDefaults.standard.string(forKey: "username_\(username)") ?? ""
+        let storedPassword = KeychainHelper.standard.retrieve(forKey: "password_\(username)") ?? ""
+
+        return username == storedUsername && password == storedPassword
+    }
 }
 
-
-#Preview {
-    UserProfileCreation()
+struct LoginInterface_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginInterface()
+    }
 }

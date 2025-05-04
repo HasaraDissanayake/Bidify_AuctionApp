@@ -1,5 +1,5 @@
 //
-//  UserProfileCreation.swift
+//  BidEntryView.swift
 //  Bidify
 //
 //  Created by Naween Weerasinghe on 2025-05-01.
