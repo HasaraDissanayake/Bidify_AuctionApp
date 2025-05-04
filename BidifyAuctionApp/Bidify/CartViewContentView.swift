@@ -160,7 +160,11 @@ struct CartItemView: View {
                 
                 Text("Condition: \(item.condition)")
                     .font(.caption)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.teal)
+                
+                Text("Category: \(item.category)")
+                    .font(.caption)
+                    .foregroundColor(.teal)
                 
                 HStack {
                     Button(action: removeAction) {

@@ -38,7 +38,7 @@ struct ItemContentView: View {
                     Text(item.name)
                         .font(.title2)
                         .fontWeight(.bold)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primaryColor)
 
                     Text(item.description)
                         .font(.body)
@@ -54,7 +54,7 @@ struct ItemContentView: View {
                 }) {
                     Image(systemName: "cart.badge.plus")
                         .font(.system(size: 22))
-                        .foregroundColor(.blue)
+                        .foregroundColor(.teal)
                         .padding(10)
                         .background(Color.white)
                         .clipShape(Circle())
@@ -91,6 +91,7 @@ struct ItemContentView: View {
 
                 categorySection(title: "Product Details", content: [
                     detailRow(title: "Condition", value: item.condition),
+                    detailRow(title: "Category", value: item.category),
                     detailRow(title: "Added", value: dateFormatter.string(from: item.addedDate))
                 ])
             }
@@ -114,11 +115,11 @@ struct ItemContentView: View {
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.gray.opacity(0.6)) // Disabled
+                        .background(Color.primaryColor.opacity(0.6)) // Disabled
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
-                .disabled(true)
+                //.disabled(true)
             }
 
             Spacer()
@@ -134,7 +135,7 @@ struct ItemContentView: View {
                     }) {
                         Image(systemName: "chevron.left")
                             .font(.title2)
-                            .foregroundColor(.blue)
+                            .foregroundColor(.teal)
                     }
                     Text(item.name)
                         .font(.headline)
@@ -193,7 +194,7 @@ struct ItemContentView: View {
             Text(value)
         }
         .font(.body)
-        .foregroundColor(.black)
+        .foregroundColor(.gray)
     }
 }
 
