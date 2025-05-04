@@ -55,6 +55,52 @@ struct CartViewContentView: View {
                         .padding(.top, 10)
                     }
                 }
+                Divider()
+
+                              // Footer (Only once)
+                              HStack {
+                                  Button(action: {}) {
+                                      VStack {
+                                          Image(systemName: "house.fill")
+                                          Text("Home")
+                                              .font(.footnote)
+                                      }
+                                  }
+                                  Spacer()
+                                  Button(action: {}) {
+                                      VStack {
+                                          Image(systemName: "chart.bar.fill")
+                                          Text("Dashboard")
+                                              .font(.footnote)
+                                      }
+                                  }
+                                  Spacer()
+                                  Button(action: {}) {
+                                      VStack {
+                                          Image(systemName: "heart.fill")
+                                          Text("Wishlist")
+                                              .font(.footnote)
+                                      }
+                                  }
+                                  Spacer()
+                                  Button(action: {}) {
+                                      VStack {
+                                          Image(systemName: "checkmark.circle.fill")
+                                          Text("Completed")
+                                              .font(.footnote)
+                                      }
+                                  }
+                                  Spacer()
+                                  Button(action: {}) {
+                                      VStack {
+                                          Image(systemName: "gearshape.fill")
+                                          Text("Settings")
+                                              .font(.footnote)
+                                      }
+                                  }
+                              }
+                              .padding()
+                              .foregroundColor(.primaryColor)
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -98,38 +144,38 @@ struct CartItemView: View {
                 .background(Color.white)
                 .cornerRadius(10)
                 .shadow(radius: 2)
-
+            
             VStack(alignment: .leading, spacing: 6) {
                 Text(item.name)
                     .font(.headline)
                     .foregroundColor(.black)
-
+                
                 Text(item.description)
                     .font(.subheadline)
                     .foregroundColor(.gray)
                     .lineLimit(1)
-
+                
                 Text("Condition: \(item.condition)")
                     .font(.caption)
                     .foregroundColor(.blue)
-
+                
                 HStack {
                     Button(action: removeAction) {
                         Text("Remove")
                             .font(.caption)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
+                            .padding(.horizontal, 25)
+                            .padding(.vertical, 10)
                             .background(Color.red)
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
-
+                    
                     Button(action: placeBidAction) {
                         Text("Place a Bid")
                             .font(.caption)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(Color.green)
+                            .padding(.horizontal, 25)
+                            .padding(.vertical, 10)
+                            .background(Color.primaryColor)
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }

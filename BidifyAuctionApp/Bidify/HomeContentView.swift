@@ -1,9 +1,10 @@
 //
 //  HomeContentView.swift
-//  Bidify
+//  Bidify_AuctionApp
 //
-//  Created by Hasara Dissanayake on 2025-04-04.
+//  Created by user271456 on 5/4/25.
 //
+
 import SwiftUI
 
 // MARK: - Color Extensions
@@ -44,17 +45,17 @@ struct HomeContentView: View {
             }
             .tag(0)
 
-            Text("My Cart")
+            Text("Dashboard")
                 .tabItem {
-                    Image(systemName: "cart.fill")
-                    Text("My Cart")
+                    Image(systemName: "chart.bar.fill")
+                    Text("Dashboard")
                 }
                 .tag(1)
 
-            Text("Pending Bids")
+            Text("WishList")
                 .tabItem {
-                    Image(systemName: "clock.arrow.circlepath")
-                    Text("Pending")
+                    Image(systemName: "heart.fill")
+                    Text("WishList")
                 }
                 .tag(2)
 
