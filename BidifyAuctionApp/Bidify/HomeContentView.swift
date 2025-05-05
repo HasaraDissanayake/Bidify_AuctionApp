@@ -105,18 +105,21 @@ struct HomeView: View {
             lastBidTime: Date().addingTimeInterval(-7200)
         )
     ]
+
     @State private var selectedCategory: String = "All"
-        @State private var showFilterSheet = false
+    @State private var showFilterSheet = false
+    @State private var navigateToCreateBid = false
 
-        var categories: [String] = ["All", "Art", "Collectables", "Fashion", "Antiques", "Electronics", "Jewelry", "Sports Memos", "Furniture", "Raw Items", "Others"]
+    var categories: [String] = ["All", "Art", "Collectables", "Fashion", "Antiques", "Electronics", "Jewelry", "Sports Memos", "Furniture", "Raw Items", "Others"]
 
-        var filteredItems: [BidItem] {
-            if selectedCategory == "All" {
-                return bidItems
-            } else {
-                return bidItems.filter { $0.category == selectedCategory }
-            }
+    var filteredItems: [BidItem] {
+        if selectedCategory == "All" {
+            return bidItems
+        } else {
+            return bidItems.filter { $0.category == selectedCategory }
         }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             // AppBar
@@ -134,18 +137,32 @@ struct HomeView: View {
                         .frame(width: 24, height: 24)
                         .foregroundColor(.primaryColor)
                 }
+
+                // Plus button
+                NavigationLink(destination: CreateBidView(), isActive: $navigateToCreateBid) {
+                    Button(action: {
+                        navigateToCreateBid = true
+                    }) {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .padding(.leading, 10)
+                            .foregroundColor(.primaryColor)
+                    }
+                }
+
                 Button(action: {
-                                    showFilterSheet = true
-                                }) {
-                                    Image(systemName: "line.horizontal.3.decrease")
-                                        .resizable()
-                                        .frame(width: 24, height: 17)
-                                        .padding(.leading, 10)
-                                        .foregroundColor(.primaryColor)
-                                }
-                                .sheet(isPresented: $showFilterSheet) {
-                                    FilterSheetView(selectedCategory: $selectedCategory, categories: categories)
-                                }
+                    showFilterSheet = true
+                }) {
+                    Image(systemName: "line.horizontal.3.decrease")
+                        .resizable()
+                        .frame(width: 24, height: 17)
+                        .padding(.leading, 10)
+                        .foregroundColor(.primaryColor)
+                }
+                .sheet(isPresented: $showFilterSheet) {
+                    FilterSheetView(selectedCategory: $selectedCategory, categories: categories)
+                }
             }
             .padding()
             .background(Color.white)
@@ -167,12 +184,13 @@ struct HomeView: View {
         .navigationBarHidden(true)
     }
 }
+
 // MARK: - Filter Sheet View
 struct FilterSheetView: View {
     @Binding var selectedCategory: String
     let categories: [String]
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         NavigationView {
             List {
@@ -182,20 +200,20 @@ struct FilterSheetView: View {
                             .foregroundColor(.black)
                             .padding(.vertical,5)
                             .frame(maxWidth: .infinity)
-                            .cornerRadius(10)         .background(Color.primaryColor.opacity(0.5))
+                            .cornerRadius(10)
+                            .background(Color.primaryColor.opacity(0.5))
                         Spacer()
                         if category == selectedCategory {
                             Image(systemName: "checkmark")
                                 .foregroundColor(.white)
                                 .padding(.vertical,5)
                                 .frame(maxWidth: .infinity)
-                            .cornerRadius(0)
-                            .background(Color.primaryColor)
+                                .background(Color.primaryColor)
                         }
                     }
                     .contentShape(Rectangle())
                     .frame(maxWidth: .infinity)
-                     .onTapGesture {
+                    .onTapGesture {
                         selectedCategory = category
                     }
                 }
