@@ -175,7 +175,10 @@ struct HomeView: View {
             ScrollView {
                 VStack(spacing: 16) {
                     ForEach(filteredItems) { item in
-                        BidItemCard(item: item)
+                        NavigationLink(destination: ItemContentView(item: item)) {
+                            BidItemCard(item: item)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
                 .padding()
@@ -286,17 +289,13 @@ struct BidItemCard: View {
             .font(.footnote)
             .foregroundColor(.gray)
 
-            Button(action: {
-                // View item details
-            }) {
-                Text("View Item")
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.primaryColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
+            Text("View Item")
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.primaryColor)
+                .foregroundColor(.white)
+                .cornerRadius(10)
         }
         .padding()
         .background(Color.white)

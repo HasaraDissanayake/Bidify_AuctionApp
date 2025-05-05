@@ -22,14 +22,14 @@ struct ItemContentView: View {
     }()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 5) {
             
             // MARK: - Item Header (Image, Description & Add to Cart)
             HStack(spacing: 12) {
                 Image(systemName: item.imageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 100, height: 90)
                     .background(Color.white)
                     .cornerRadius(10)
                     .shadow(radius: 2)
@@ -130,16 +130,16 @@ struct ItemContentView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 HStack {
-                    Button(action: {
+                    //Button(action: {
                         // Go back
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .font(.title2)
-                            .foregroundColor(.teal)
-                    }
-                    Text(item.name)
-                        .font(.headline)
-                        .foregroundColor(.black)
+                    //}) {
+                        //Image(systemName: "chevron.left")
+                            //.font(.title2)
+                           // .foregroundColor(.teal)
+                    //}
+                    //Text(item.name)
+                       // .font(.headline)
+                       // .foregroundColor(.black)
                 }
             }
         }
