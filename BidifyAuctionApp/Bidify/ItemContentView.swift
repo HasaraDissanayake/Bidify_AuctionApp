@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-// MARK: - Item Content View
 struct ItemContentView: View {
-    let item: BidItem
-    @State private var timeRemaining: TimeInterval = 259200 // 3 days countdown
+    let item: Bid_Item
+    @State private var timeRemaining: TimeInterval = 259200 // 3 days
     @State private var timerActive: Bool = true
     @State private var userBid: Double?
+    @EnvironmentObject var bidManager: BidManager
+    @State private var showAddToCartAlert = false
 
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -22,130 +23,127 @@ struct ItemContentView: View {
     }()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            
-            // MARK: - Item Header (Image, Description & Add to Cart)
-            HStack(spacing: 12) {
-                Image(systemName: item.imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 90)
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .shadow(radius: 2)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                // Image and Title Section
+                HStack(spacing: 12) {
+                    if let uiImage = item.image {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 90)
+                            .cornerRadius(10)
+                            .shadow(radius: 2)
+                    } else {
+                        Image(systemName: "photo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 90)
+                            .foregroundColor(.gray)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 2)
+                    }
 
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(item.name)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.primaryColor)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(item.itemName)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(.teal)
 
-                    Text(item.description)
-                        .font(.body)
-                        .foregroundColor(.gray)
-                        .lineLimit(2)
+                        Text(item.description)
+                            .font(.body)
+                            .foregroundColor(.gray)
+                            .lineLimit(2)
+                    }
+
+                    Spacer()
+
+                    Button(action: {
+                        bidManager.addToCart(item)
+                        showAddToCartAlert = true
+                    }) {
+                        Image(systemName: "cart.badge.plus")
+                            .font(.system(size: 22))
+                            .foregroundColor(.teal)
+                            .padding(10)
+                            .background(Color.white)
+                            .clipShape(Circle())
+                            .shadow(radius: 2)
+                    }
                 }
 
-                Spacer()
+                // Countdown Timer
+                Text("Time Remaining: \(timeFormatted(timeRemaining))")
+                    .font(.headline)
+                    .foregroundColor(.red)
+                    .onAppear {
+                        startCountdown()
+                    }
 
-                // Add to Cart Button (Top Right)
-                Button(action: {
-                    print("Added to Cart")
-                }) {
-                    Image(systemName: "cart.badge.plus")
-                        .font(.system(size: 22))
-                        .foregroundColor(.teal)
-                        .padding(10)
-                        .background(Color.white)
-                        .clipShape(Circle())
-                        .shadow(radius: 2)
-                }
-            }
-
-            // MARK: - Countdown Timer
-            Text("Time Remaining: \(timeFormatted(timeRemaining))")
-                .font(.headline)
-                .foregroundColor(.red)
-                .onAppear {
-                    startCountdown()
-                }
-
-            // MARK: - Item Details Section
-            VStack(alignment: .leading, spacing: 6) {
+                // Shipping Info
                 categorySection(title: "Shipping Details", content: [
-                    detailRow(title: "Seller", value: "John Doe Auctions"),
-                    detailRow(title: "Warranty", value: "6 Months Manufacturer Warranty"),
-                    detailRow(title: "Shipping", value: "Available in USA & Canada"),
-                    detailRow(title: "Location", value: "New York, USA")
+                    detailRow(title: "Seller", value: item.sellerName),
+                    detailRow(title: "Email", value: item.email),
+                    detailRow(title: "Contact", value: item.contact),
+                    detailRow(title: "Location", value: item.location)
                 ])
 
-                categorySection(title: "Price & Bids", content: [
-                    detailRow(title: "Highest Bid", value: "$\(String(format: "%.2f", item.highestBid))"),
-                    detailRow(title: "Your Bid", value: userBid != nil ? "$\(String(format: "%.2f", userBid!))" : "Not Placed")
+                // Bidding Info
+                categorySection(title: "Bidding Info", content: [
+                    detailRow(title: "Your Bid", value: userBid != nil ? "$\(String(format: "%.2f", userBid!))" : "Not Placed"),
+                    detailRow(title: "Listed On", value: dateFormatter.string(from: item.createdDate))
                 ])
 
-                categorySection(title: "Reviews", content: [
-                    detailRow(title: "User Ratings", value: "Rated: 4.2/5 (250 Reviews)"),
-                    detailRow(title: "Last Bid Time", value: dateFormatter.string(from: item.lastBidTime))
-                ])
-
-                categorySection(title: "Product Details", content: [
+                // Product Info
+                categorySection(title: "Product Info", content: [
                     detailRow(title: "Condition", value: item.condition),
                     detailRow(title: "Category", value: item.category),
-                    detailRow(title: "Added", value: dateFormatter.string(from: item.addedDate))
+                    detailRow(title: "Description", value: item.description)
                 ])
-            }
 
-            // MARK: - Buttons
-            HStack(spacing: 10) {
-                Button(action: {
-                    timerActive = false
-                }) {
-                    Text("Cancel")
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                // Action Buttons
+                HStack(spacing: 10) {
+                    Button(action: {
+                        timerActive = false
+                        print("Cancelled")
+                    }) {
+                        Text("Cancel")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+
+                    Button(action: {
+                        print("Bid action tapped")
+                    }) {
+                        Text("Bid")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.teal)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
                 }
-
-                Button(action: {}) {
-                    Text("Bid")
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.primaryColor.opacity(0.6)) // Disabled
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                //.disabled(true)
             }
-
-            Spacer()
+            .padding()
         }
-        .padding()
-        .background(Color.white.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                HStack {
-                    //Button(action: {
-                        // Go back
-                    //}) {
-                        //Image(systemName: "chevron.left")
-                            //.font(.title2)
-                           // .foregroundColor(.teal)
-                    //}
-                    //Text(item.name)
-                       // .font(.headline)
-                       // .foregroundColor(.black)
-                }
-            }
+        .background(Color.white.ignoresSafeArea())
+        .alert(isPresented: $showAddToCartAlert) {
+            Alert(
+                title: Text("Success"),
+                message: Text("Item successfully added to the cart."),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
 
-    // MARK: - Timer Handling
+    // MARK: - Timer
     private func startCountdown() {
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if timeRemaining > 0 && timerActive {
@@ -156,7 +154,7 @@ struct ItemContentView: View {
         }
     }
 
-    // MARK: - Time Formatting
+    // MARK: - Format Time
     private func timeFormatted(_ time: TimeInterval) -> String {
         let days = Int(time) / 86400
         let hours = (Int(time) % 86400) / 3600
@@ -165,12 +163,11 @@ struct ItemContentView: View {
         return "\(days)d \(hours)h \(minutes)m \(seconds)s"
     }
 
-    // MARK: - Category Section
+    // MARK: - Detail Section
     private func categorySection(title: String, content: [some View]) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(title)
                 .font(.headline)
-                .foregroundColor(.black)
                 .padding(.top, 4)
 
             VStack(spacing: 4) {
@@ -185,7 +182,6 @@ struct ItemContentView: View {
         }
     }
 
-    // MARK: - Detail Row
     private func detailRow(title: String, value: String) -> some View {
         HStack {
             Text(title + ":")
@@ -202,18 +198,20 @@ struct ItemContentView: View {
 struct ItemContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ItemContentView(item: BidItem(
-                id: 1,
-                name: "iPhone 14",
-                quantity: 1,
-                highestBid: 1200,
-                imageName: "iphone",
+            ItemContentView(item: Bid_Item(
+                id: UUID(),
+                itemName: "iPhone 14",
                 description: "Latest iPhone model with advanced features.",
-                condition: "Brand New",
                 category: "Electronics",
-                addedDate: Date().addingTimeInterval(-86400),
-                lastBidTime: Date().addingTimeInterval(-3600)
+                condition: "Brand New",
+                image: nil,
+                sellerName: "John Doe",
+                email: "john@example.com",
+                contact: "1234567890",
+                location: "New York, USA",
+                createdDate: Date()
             ))
+            .environmentObject(BidManager())
         }
     }
 }

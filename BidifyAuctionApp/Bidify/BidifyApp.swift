@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct BidifyApp: App {
+    @StateObject var bidManager = BidManager()
+
     var body: some Scene {
         WindowGroup {
-            HomeContentView()
+            LoginInterface()
+                .environmentObject(bidManager) // ✅ Inject BidManager
         }
     }
 }

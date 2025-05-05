@@ -5,33 +5,64 @@
 //  Created by Hasara Dissanayake on 2025-04-04.
 //
 
-import Foundation
 import SwiftUI
 
-class BidManager: ObservableObject {
-    @Published var bidItems: [Bid_Item] = [] {
-        didSet {
-            saveItemsToUserDefaults()
-        }
-    }
+struct Bid_Item: Identifiable {
+    let id: UUID
+    let itemName: String
+    let description: String
+    let category: String
+    let condition: String
+    let image: UIImage?
+    let sellerName: String
+    let email: String
+    let contact: String
+    let location: String
+    let createdDate: Date
 
-    func addItem(_ item: Bid_Item) {
-        bidItems.append(item)
-    }
-
-    func saveItemsToUserDefaults() {
-        let encoder = JSONEncoder()
-        if let data = try? encoder.encode(bidItems.map { $0.toCodable() }) {
-            UserDefaults.standard.set(data, forKey: "bidItems")
-        }
-    }
-
-    func loadItemsFromUserDefaults() {
-        let decoder = JSONDecoder()
-        if let data = UserDefaults.standard.data(forKey: "bidItems"),
-           let codableItems = try? decoder.decode([CodableBidItem].self, from: data) {
-            bidItems = codableItems.map { $0.toBidItem() }
-        }
+    func toCodable() -> CodableBidItem {
+        CodableBidItem(
+            id: id,
+            itemName: itemName,
+            description: description,
+            category: category,
+            condition: condition,
+            imageData: image?.jpegData(compressionQuality: 0.8),
+            sellerName: sellerName,
+            email: email,
+            contact: contact,
+            location: location,
+            createdDate: createdDate
+        )
     }
 }
 
+struct CodableBidItem: Codable {
+    let id: UUID
+    let itemName: String
+    let description: String
+    let category: String
+    let condition: String
+    let imageData: Data?
+    let sellerName: String
+    let email: String
+    let contact: String
+    let location: String
+    let createdDate: Date
+
+    func toBidItem() -> Bid_Item {
+        Bid_Item(
+            id: id,
+            itemName: itemName,
+            description: description,
+            category: category,
+            condition: condition,
+            image: imageData.flatMap { UIImage(data: $0) },
+            sellerName: sellerName,
+            email: email,
+            contact: contact,
+            location: location,
+            createdDate: createdDate
+        )
+    }
+}
