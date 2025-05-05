@@ -58,52 +58,6 @@ struct CartViewContentView: View {
                         .padding(.top, 10)
                     }
                 }
-                Divider()
-
-                              // Footer (Only once)
-                              HStack {
-                                  Button(action: {}) {
-                                      VStack {
-                                          Image(systemName: "house.fill")
-                                          Text("Home")
-                                              .font(.footnote)
-                                      }
-                                  }
-                                  Spacer()
-                                  Button(action: {}) {
-                                      VStack {
-                                          Image(systemName: "chart.bar.fill")
-                                          Text("Dashboard")
-                                              .font(.footnote)
-                                      }
-                                  }
-                                  Spacer()
-                                  Button(action: {}) {
-                                      VStack {
-                                          Image(systemName: "heart.fill")
-                                          Text("Wishlist")
-                                              .font(.footnote)
-                                      }
-                                  }
-                                  Spacer()
-                                  Button(action: {}) {
-                                      VStack {
-                                          Image(systemName: "checkmark.circle.fill")
-                                          Text("Completed")
-                                              .font(.footnote)
-                                      }
-                                  }
-                                  Spacer()
-                                  Button(action: {}) {
-                                      VStack {
-                                          Image(systemName: "gearshape.fill")
-                                          Text("Settings")
-                                              .font(.footnote)
-                                      }
-                                  }
-                              }
-                              .padding()
-                              .foregroundColor(.primaryColor)
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

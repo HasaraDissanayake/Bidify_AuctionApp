@@ -109,6 +109,7 @@ struct HomeView: View {
     @State private var selectedCategory: String = "All"
     @State private var showFilterSheet = false
     @State private var navigateToCreateBid = false
+    @State private var navigateToCart = false
 
     var categories: [String] = ["All", "Art", "Collectables", "Fashion", "Antiques", "Electronics", "Jewelry", "Sports Memos", "Furniture", "Raw Items", "Others"]
 
@@ -129,16 +130,18 @@ struct HomeView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.accentColor)
                 Spacer()
-                Button(action: {
-                    // Navigate to cart
-                }) {
-                    Image(systemName: "cart")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.primaryColor)
+
+                NavigationLink(destination: CartViewContentView(), isActive: $navigateToCart) {
+                    Button(action: {
+                        navigateToCart = true
+                    }) {
+                        Image(systemName: "cart")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.primaryColor)
+                    }
                 }
 
-                // Plus button
                 NavigationLink(destination: CreateBidView(), isActive: $navigateToCreateBid) {
                     Button(action: {
                         navigateToCreateBid = true
@@ -198,15 +201,15 @@ struct FilterSheetView: View {
                     HStack {
                         Text(category)
                             .foregroundColor(.black)
-                            .padding(.vertical,5)
+                            .padding(.vertical, 5)
                             .frame(maxWidth: .infinity)
-                            .cornerRadius(10)
                             .background(Color.primaryColor.opacity(0.5))
+                            .cornerRadius(10)
                         Spacer()
                         if category == selectedCategory {
                             Image(systemName: "checkmark")
                                 .foregroundColor(.white)
-                                .padding(.vertical,5)
+                                .padding(.vertical, 5)
                                 .frame(maxWidth: .infinity)
                                 .background(Color.primaryColor)
                         }
