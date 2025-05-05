@@ -7,14 +7,17 @@
 
 import SwiftUI
 
-struct BidEntryView: View {
-    // These would typically be fetched from a database
-    var itemName: String = "Apple iPhone 14"
-    var sellerName: String = "Jane Smith"
-    var bidderAddress: String = "123 Main St, Cityville"
-    var currentHighestBid: Double = 1200.0
+struct AuctionItem {
+    var code: String
+    var name: String
+    var seller: String
+    var currentHighestBid: Double
+}
 
-    // Bid amount input
+struct BidEntryView: View {
+    let item: AuctionItem
+    let bidderAddress: String
+
     @State private var bidAmount: String = ""
 
     var body: some View {
@@ -27,10 +30,10 @@ struct BidEntryView: View {
 
                 // Auto-filled info
                 Group {
-                    InfoRow(label: "Item Name", value: itemName)
-                    InfoRow(label: "Seller", value: sellerName)
+                    InfoRow(label: "Item Name", value: item.name)
+                    InfoRow(label: "Seller", value: item.seller)
                     InfoRow(label: "Your Address", value: bidderAddress)
-                    InfoRow(label: "Highest Bid", value: "$\(String(format: "%.2f", currentHighestBid))")
+                    InfoRow(label: "Highest Bid", value: "$\(String(format: "%.2f", item.currentHighestBid))")
                 }
 
                 // Bid Input
@@ -46,8 +49,7 @@ struct BidEntryView: View {
 
                 // Submit Button
                 Button(action: {
-                    // Handle bid submission here (e.g., send to backend)
-                    print("Bid submitted: \(bidAmount)")
+                    submitBid()
                 }) {
                     Text("Submit Bid")
                         .frame(maxWidth: .infinity)
@@ -63,6 +65,20 @@ struct BidEntryView: View {
             .padding()
             .navigationBarTitle("Bid Window", displayMode: .inline)
         }
+    }
+
+    // Save the bid with item code
+    func submitBid() {
+        guard let bid = Double(bidAmount), bid > item.currentHighestBid else {
+            print("Bid is too low or invalid.")
+            return
+        }
+
+        // Save to UserDefaults as a simple built-in storage method
+        let key = "bid_\(item.code)"
+        UserDefaults.standard.set(bid, forKey: key)
+
+        print("Bid of \(bid) saved for item code \(item.code)")
     }
 }
 
@@ -83,6 +99,12 @@ struct InfoRow: View {
 
 struct BidEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        BidEntryView()
+        let sampleItem = AuctionItem(
+            code: "A123",
+            name: "Apple iPhone 14",
+            seller: "Jane Smith",
+            currentHighestBid: 1200.0
+        )
+        BidEntryView(item: sampleItem, bidderAddress: "123 Main St, Cityville")
     }
 }
