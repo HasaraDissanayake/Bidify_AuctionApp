@@ -22,14 +22,14 @@ struct ItemContentView: View {
     }()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 5) {
             
             // MARK: - Item Header (Image, Description & Add to Cart)
             HStack(spacing: 12) {
                 Image(systemName: item.imageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 100, height: 90)
                     .background(Color.white)
                     .cornerRadius(10)
                     .shadow(radius: 2)
@@ -38,7 +38,7 @@ struct ItemContentView: View {
                     Text(item.name)
                         .font(.title2)
                         .fontWeight(.bold)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primaryColor)
 
                     Text(item.description)
                         .font(.body)
@@ -54,7 +54,7 @@ struct ItemContentView: View {
                 }) {
                     Image(systemName: "cart.badge.plus")
                         .font(.system(size: 22))
-                        .foregroundColor(.blue)
+                        .foregroundColor(.teal)
                         .padding(10)
                         .background(Color.white)
                         .clipShape(Circle())
@@ -91,6 +91,7 @@ struct ItemContentView: View {
 
                 categorySection(title: "Product Details", content: [
                     detailRow(title: "Condition", value: item.condition),
+                    detailRow(title: "Category", value: item.category),
                     detailRow(title: "Added", value: dateFormatter.string(from: item.addedDate))
                 ])
             }
@@ -114,11 +115,11 @@ struct ItemContentView: View {
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.gray.opacity(0.6)) // Disabled
+                        .background(Color.primaryColor.opacity(0.6)) // Disabled
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
-                .disabled(true)
+                //.disabled(true)
             }
 
             Spacer()
@@ -129,16 +130,16 @@ struct ItemContentView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 HStack {
-                    Button(action: {
+                    //Button(action: {
                         // Go back
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .font(.title2)
-                            .foregroundColor(.blue)
-                    }
-                    Text(item.name)
-                        .font(.headline)
-                        .foregroundColor(.black)
+                    //}) {
+                        //Image(systemName: "chevron.left")
+                            //.font(.title2)
+                           // .foregroundColor(.teal)
+                    //}
+                    //Text(item.name)
+                       // .font(.headline)
+                       // .foregroundColor(.black)
                 }
             }
         }
@@ -193,7 +194,7 @@ struct ItemContentView: View {
             Text(value)
         }
         .font(.body)
-        .foregroundColor(.black)
+        .foregroundColor(.gray)
     }
 }
 
@@ -209,6 +210,7 @@ struct ItemContentView_Previews: PreviewProvider {
                 imageName: "iphone",
                 description: "Latest iPhone model with advanced features.",
                 condition: "Brand New",
+                category: "Electronics",
                 addedDate: Date().addingTimeInterval(-86400),
                 lastBidTime: Date().addingTimeInterval(-3600)
             ))
