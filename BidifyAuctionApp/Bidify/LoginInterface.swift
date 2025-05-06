@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct LoginInterface: View {
+    @Binding var isLoggedIn: Bool // ✅ External login state binding
+
     @State private var username = ""
     @State private var password = ""
     @State private var showError = false
     @State private var errorMessage = ""
-    @State private var isLoggedIn = false
 
     var body: some View {
         NavigationView {
@@ -55,7 +56,7 @@ struct LoginInterface: View {
                     if validateCredentials(username: username, password: password) {
                         showError = false
                         UserDefaults.standard.set(username, forKey: "currentUser")
-                        isLoggedIn = true
+                        isLoggedIn = true // ✅ Triggers switch in @main
                     } else {
                         showError = true
                         errorMessage = "Invalid username or password. Please try again."
@@ -68,12 +69,6 @@ struct LoginInterface: View {
                 .cornerRadius(10)
                 .font(.headline)
                 .padding(.horizontal)
-
-                NavigationLink(
-                    destination: HomeContentView(),
-                    isActive: $isLoggedIn,
-                    label: { EmptyView() }
-                )
 
                 Spacer()
 
@@ -96,5 +91,5 @@ struct LoginInterface: View {
 }
 
 #Preview {
-    LoginInterface()
+    LoginInterface(isLoggedIn: .constant(false))
 }

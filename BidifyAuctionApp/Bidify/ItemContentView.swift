@@ -14,6 +14,7 @@ struct ItemContentView: View {
     @State private var userBid: Double?
     @EnvironmentObject var bidManager: BidManager
     @State private var showAddToCartAlert = false
+    @State private var navigateToBidView = false // new state to trigger navigation
 
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -118,7 +119,7 @@ struct ItemContentView: View {
                     }
 
                     Button(action: {
-                        print("Bid action tapped")
+                        navigateToBidView = true
                     }) {
                         Text("Bid")
                             .fontWeight(.semibold)
@@ -128,6 +129,22 @@ struct ItemContentView: View {
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
+                    .background(
+                        NavigationLink(
+                            destination: BidEntryView(
+                                item: AuctionItem(
+                                    code: item.id.uuidString,
+                                    name: item.itemName,
+                                    seller: item.sellerName,
+                                    currentHighestBid: userBid ?? 0.0
+                                ),
+                                bidderAddress: item.location
+                            ),
+                            isActive: $navigateToBidView,
+                            label: { EmptyView() }
+                        )
+                        .hidden()
+                    )
                 }
             }
             .padding()

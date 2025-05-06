@@ -7,62 +7,32 @@
 
 import SwiftUI
 
-struct Bid_Item: Identifiable {
-    let id: UUID
-    let itemName: String
-    let description: String
-    let category: String
-    let condition: String
-    let image: UIImage?
-    let sellerName: String
-    let email: String
-    let contact: String
-    let location: String
-    let createdDate: Date
+struct MainTabView: View {
+    var body: some View {
+        TabView {
+            HomeContentView()
+                .tabItem {
+                    Image(systemName: "house.fill")
+                    Text("Home")
+                }
 
-    func toCodable() -> CodableBidItem {
-        CodableBidItem(
-            id: id,
-            itemName: itemName,
-            description: description,
-            category: category,
-            condition: condition,
-            imageData: image?.jpegData(compressionQuality: 0.8),
-            sellerName: sellerName,
-            email: email,
-            contact: contact,
-            location: location,
-            createdDate: createdDate
-        )
-    }
-}
+            WishlistView()
+                .tabItem {
+                    Image(systemName: "heart.fill")
+                    Text("Wishlist")
+                }
 
-struct CodableBidItem: Codable {
-    let id: UUID
-    let itemName: String
-    let description: String
-    let category: String
-    let condition: String
-    let imageData: Data?
-    let sellerName: String
-    let email: String
-    let contact: String
-    let location: String
-    let createdDate: Date
+            DashboardView()
+                .tabItem {
+                    Image(systemName: "chart.bar.fill")
+                    Text("Dashboard")
+                }
 
-    func toBidItem() -> Bid_Item {
-        Bid_Item(
-            id: id,
-            itemName: itemName,
-            description: description,
-            category: category,
-            condition: condition,
-            image: imageData.flatMap { UIImage(data: $0) },
-            sellerName: sellerName,
-            email: email,
-            contact: contact,
-            location: location,
-            createdDate: createdDate
-        )
+            UserProfileView()
+                .tabItem {
+                    Image(systemName: "gearshape.fill")
+                    Text("Settings")
+                }
+        }
     }
 }

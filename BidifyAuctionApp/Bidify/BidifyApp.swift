@@ -10,11 +10,17 @@ import SwiftUI
 @main
 struct BidifyApp: App {
     @StateObject var bidManager = BidManager()
+    @State private var isLoggedIn = false // 👈 Track login state
 
     var body: some Scene {
         WindowGroup {
-            LoginInterface()
-                .environmentObject(bidManager) // ✅ Inject BidManager
+            if isLoggedIn {
+                MainTabView()
+                    .environmentObject(bidManager)
+            } else {
+                LoginInterface(isLoggedIn: $isLoggedIn)
+                    .environmentObject(bidManager)
+            }
         }
     }
 }
