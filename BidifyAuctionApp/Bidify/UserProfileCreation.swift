@@ -62,7 +62,7 @@ struct UserProfileCreation: View {
                 Section(header: Text("Account Credentials").foregroundColor(.teal)) {
                     TextField("Username *", text: $username)
                     SecureField("Password *", text: $password)
-                        .textContentType(.newPassword) // ✅ Avoid autofill yellow suggestion
+                        .textContentType(.newPassword)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                     SecureField("Confirm Password *", text: $confirmPassword)
@@ -88,7 +88,7 @@ struct UserProfileCreation: View {
                 }
 
                 Section {
-                    Button(action: {
+                    Button("Create Account") {
                         if isFormValid {
                             saveUserData()
                             showSuccessAlert = true
@@ -96,52 +96,47 @@ struct UserProfileCreation: View {
                         } else {
                             showAlert = true
                         }
-                    }) {
-                        Text("Create Account")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(isFormValid ? Color.teal : Color.gray.opacity(0.4))
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .font(.headline)
                     }
                     .disabled(!isFormValid)
-                    .alert(isPresented: $showAlert) {
-                        Alert(
-                            title: Text("Incomplete or Invalid Form"),
-                            message: Text("Please ensure all required fields are filled and valid."),
-                            dismissButton: .default(Text("OK"))
-                        )
-                    }
-                    .alert("Account Created", isPresented: $showSuccessAlert) {
-                        Button("OK", role: .cancel) {}
-                    } message: {
-                        Text("Your account has been successfully created.")
-                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(isFormValid ? Color.teal : Color.gray.opacity(0.4))
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
             }
             .navigationTitle("Create Account")
-            .navigationBarTitleDisplayMode(.inline)
-            .accentColor(.teal)
+            .alert("Incomplete or Invalid Form", isPresented: $showAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Please ensure all required fields are filled and valid.")
+            }
+            .alert("Account Created", isPresented: $showSuccessAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Your account has been successfully created.")
+            }
         }
     }
 
     func saveUserData() {
-        UserDefaults.standard.set(fullName, forKey: "fullName")
-        UserDefaults.standard.set(address, forKey: "address")
-        UserDefaults.standard.set(idNumber, forKey: "idNumber")
-        UserDefaults.standard.set(mobileNumber, forKey: "mobileNumber")
-        UserDefaults.standard.set(email, forKey: "email")
-        UserDefaults.standard.set(secondaryContact, forKey: "secondaryContact")
-        UserDefaults.standard.set(username, forKey: "username")
-
+        let profile: [String: String] = [
+            "fullName": fullName,
+            "address": address,
+            "idNumber": idNumber,
+            "mobileNumber": mobileNumber,
+            "email": email,
+            "secondaryContact": secondaryContact
+        ]
+        UserDefaults.standard.set(profile, forKey: "user_\(username)")
         KeychainHelper.standard.save(password, forKey: "password_\(username)")
 
         var usernames = UserDefaults.standard.stringArray(forKey: "Usernames") ?? []
-        if !usernames.contains(username) {
-            usernames.append(username)
-            UserDefaults.standard.set(usernames, forKey: "Usernames")
-        }
+        usernames.append(username)
+        UserDefaults.standard.set(usernames, forKey: "Usernames")
+
+        // ✅ Save current user for profile view
+        UserDefaults.standard.set(username, forKey: "currentUser")
     }
 
     func clearForm() {
@@ -162,7 +157,6 @@ struct UserProfileCreation: View {
 }
 
 // MARK: - Keychain Helper
-
 class KeychainHelper {
     static let standard = KeychainHelper()
 

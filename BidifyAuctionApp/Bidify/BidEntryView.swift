@@ -14,71 +14,103 @@ struct AuctionItem {
     var currentHighestBid: Double
 }
 
+enum BidAlertType {
+    case success
+    case error
+}
+
 struct BidEntryView: View {
     let item: AuctionItem
     let bidderAddress: String
 
     @State private var bidAmount: String = ""
+    @State private var highestBid: Double = 0
+    @State private var showAlert = false
+    @State private var alertType: BidAlertType = .success
+
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Place Your Bid")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.teal)
+        VStack(alignment: .leading, spacing: 20) {
+            Text("Place Your Bid")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.teal)
 
-                // Auto-filled info
-                Group {
-                    InfoRow(label: "Item Name", value: item.name)
-                    InfoRow(label: "Seller", value: item.seller)
-                    InfoRow(label: "Your Address", value: bidderAddress)
-                    InfoRow(label: "Highest Bid", value: "$\(String(format: "%.2f", item.currentHighestBid))")
-                }
-
-                // Bid Input
-                VStack(alignment: .leading) {
-                    Text("Your Bid Amount")
-                        .bold()
-                    TextField("Enter amount (USD)", text: $bidAmount)
-                        .keyboardType(.decimalPad)
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
-                }
-
-                // Submit Button
-                Button(action: {
-                    submitBid()
-                }) {
-                    Text("Submit Bid")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.teal)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding(.top, 20)
-
-                Spacer()
+            Group {
+                InfoRow(label: "Item Name", value: item.name)
+                InfoRow(label: "Seller", value: item.seller)
+                InfoRow(label: "Your Address", value: bidderAddress)
+                InfoRow(label: "Highest Bid", value: "$\(String(format: "%.2f", highestBid))")
             }
-            .padding()
-            .navigationBarTitle("Bid Window", displayMode: .inline)
+
+            VStack(alignment: .leading) {
+                Text("Your Bid Amount")
+                    .bold()
+                TextField("Enter amount (USD)", text: $bidAmount)
+                    .keyboardType(.decimalPad)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
+            }
+
+            Button(action: {
+                submitBid()
+            }) {
+                Text("Submit Bid")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.teal)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding(.top, 20)
+
+            Spacer()
+        }
+        .padding()
+        .navigationBarTitle("Bid Window", displayMode: .inline)
+        .onAppear {
+            loadHighestBid()
+        }
+        .alert(isPresented: $showAlert) {
+            switch alertType {
+            case .success:
+                return Alert(
+                    title: Text("Bid Submitted"),
+                    message: Text("Your bid of $\(bidAmount) was successfully submitted."),
+                    dismissButton: .default(Text("OK")) {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                )
+            case .error:
+                return Alert(
+                    title: Text("Invalid Bid"),
+                    message: Text("Please enter a valid amount higher than the current highest bid."),
+                    dismissButton: .default(Text("Try Again"))
+                )
+            }
         }
     }
 
-    // Save the bid with item code
+    func loadHighestBid() {
+        let key = "bid_\(item.code)"
+        let savedBid = UserDefaults.standard.double(forKey: key)
+        highestBid = max(savedBid, item.currentHighestBid)
+    }
+
     func submitBid() {
-        guard let bid = Double(bidAmount), bid > item.currentHighestBid else {
-            print("Bid is too low or invalid.")
+        guard let bid = Double(bidAmount), bid > highestBid else {
+            alertType = .error
+            showAlert = true
             return
         }
 
-        // Save to UserDefaults as a simple built-in storage method
         let key = "bid_\(item.code)"
         UserDefaults.standard.set(bid, forKey: key)
-
-        print("Bid of \(bid) saved for item code \(item.code)")
+        highestBid = bid
+        alertType = .success
+        showAlert = true
     }
 }
 
