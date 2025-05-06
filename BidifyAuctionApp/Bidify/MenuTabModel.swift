@@ -1,5 +1,5 @@
 //
-//  BidifyApp.swift
+//  MenuTabModel.swift
 //  Bidify
 //
 //  Created by Hasara Dissanayake on 2025-04-04.
