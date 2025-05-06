@@ -103,62 +103,6 @@ struct DashboardView: View {
             }
 
             Divider()
-
-            // Inline Footer Section
-            HStack {
-                Button(action: {
-                    // Navigate to Home
-                }) {
-                    VStack {
-                        Image(systemName: "house.fill")
-                        Text("Home")
-                            .font(.footnote)
-                    }
-                }
-                Spacer()
-                Button(action: {
-                    // Navigate to Dashboard
-                }) {
-                    VStack {
-                        Image(systemName: "chart.bar.fill")
-                        Text("Dashboard")
-                            .font(.footnote)
-                    }
-                }
-                Spacer()
-                Button(action: {
-                    // Navigate to Wishlist
-                }) {
-                    VStack {
-                        Image(systemName: "heart.fill")
-                        Text("Wishlist")
-                            .font(.footnote)
-                    }
-                }
-                Spacer()
-                Button(action: {
-                    // Navigate to Completed
-                }) {
-                    VStack {
-                        Image(systemName: "checkmark.circle.fill")
-                        Text("Completed")
-                            .font(.footnote)
-                    }
-                }
-                Spacer()
-                Button(action: {
-                    // Navigate to Settings
-                }) {
-                    VStack {
-                        Image(systemName: "gearshape.fill")
-                        Text("Settings")
-                            .font(.footnote)
-                    }
-                }
-            }
-            .padding()
-            .background(Color(.systemGray6))
-            .foregroundColor(.teal)
         }
     }
 }
