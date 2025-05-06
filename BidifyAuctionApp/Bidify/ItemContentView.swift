@@ -9,13 +9,13 @@ import SwiftUI
 
 struct ItemContentView: View {
     let item: Bid_Item
-    @State private var timeRemaining: TimeInterval = 259200 // 3 days
+    @State private var timeRemaining: TimeInterval = 0
     @State private var timerActive: Bool = true
     @State private var userBid: Double?
     @EnvironmentObject var bidManager: BidManager
     @State private var showAddToCartAlert = false
     @State private var navigateToBidView = false
-    @State private var isWishlisted = false // ✅ NEW state to toggle heart icon
+    @State private var isWishlisted = false
 
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -76,7 +76,7 @@ struct ItemContentView: View {
                                 .shadow(radius: 2)
                         }
 
-                        // Heart Button ✅
+                        // Heart Button
                         Button(action: {
                             if bidManager.wishlistItems.contains(where: { $0.id == item.id }) {
                                 bidManager.removeFromWishlist(item)
@@ -101,9 +101,11 @@ struct ItemContentView: View {
                 }
 
                 // Countdown Timer
-                Text("Time Remaining: \(timeFormatted(timeRemaining))")
+                Text(timeRemaining > 0
+                     ? "Time Remaining: \(timeFormatted(timeRemaining))"
+                     : "Auction Ended")
                     .font(.headline)
-                    .foregroundColor(.red)
+                    .foregroundColor(timeRemaining > 0 ? .red : .gray)
                     .onAppear {
                         startCountdown()
                     }
@@ -188,6 +190,11 @@ struct ItemContentView: View {
 
     // MARK: - Timer
     private func startCountdown() {
+        let totalAuctionTime: TimeInterval = 3 * 24 * 60 * 60 // 3 days
+        let timeSinceCreation = Date().timeIntervalSince(item.createdDate)
+        let remaining = totalAuctionTime - timeSinceCreation
+        timeRemaining = max(remaining, 0)
+
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if timeRemaining > 0 && timerActive {
                 timeRemaining -= 1
@@ -252,7 +259,7 @@ struct ItemContentView_Previews: PreviewProvider {
                 email: "john@example.com",
                 contact: "1234567890",
                 location: "New York, USA",
-                createdDate: Date()
+                createdDate: Date().addingTimeInterval(-60 * 60 * 24 * 1) // 1 day ago
             ))
             .environmentObject(BidManager())
         }
