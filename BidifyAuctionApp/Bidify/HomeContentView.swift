@@ -179,7 +179,7 @@ struct BidRowView: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(LinearGradient(
-                        gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.7)]),
+                        gradient: Gradient(colors: [Color.teal, Color.teal.opacity(0.7)]),
                         startPoint: .top,
                         endPoint: .bottom
                     ))
