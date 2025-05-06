@@ -11,6 +11,7 @@ struct HomeContentView: View {
     @EnvironmentObject var bidManager: BidManager
     @State private var selectedCategory: String = "All"
     @State private var isCategoryPickerPresented: Bool = false
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = true // ✅ Persisted login state
 
     var categories: [String] = ["All", "Art", "Collectables", "Fashion", "Antiques", "Electronics", "Jewelry", "Sports Memo", "Furniture", "Others"]
 
@@ -22,8 +23,8 @@ struct HomeContentView: View {
         NavigationStack {
             VStack(spacing: 4) {
                 // Top bar
-                VStack(spacing: 4) {
-                    // Centered title
+                VStack(alignment: .leading, spacing: 4) {
+                    // Centered "Home" title
                     HStack {
                         Spacer()
                         Text("Home")
@@ -33,7 +34,20 @@ struct HomeContentView: View {
                         Spacer()
                     }
 
-                    // Right icons
+                    // Sign Out button below title, left-aligned
+                    Button(action: {
+                        signOut()
+                    }) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "arrow.left")
+                            Text("Sign Out")
+                        }
+                        .font(.headline)
+                        .foregroundColor(.red)
+                    }
+                    .padding(.leading, 16)
+
+                    // Right-side icons
                     HStack {
                         Spacer()
 
@@ -47,7 +61,7 @@ struct HomeContentView: View {
                         }
                         .padding(.trailing, 8)
 
-                        // "+" button
+                        // "+" button to create bid
                         NavigationLink(destination: CreateBidView()) {
                             Text("+")
                                 .font(.title2)
@@ -109,7 +123,13 @@ struct HomeContentView: View {
             }
         }
     }
+
+    private func signOut() {
+        isLoggedIn = false // ✅ Triggers transition to LoginInterface
+    }
 }
+
+// MARK: - BidRowView
 
 struct BidRowView: View {
     let item: Bid_Item

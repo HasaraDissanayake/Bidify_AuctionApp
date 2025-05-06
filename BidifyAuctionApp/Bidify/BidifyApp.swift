@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct BidifyApp: App {
     @StateObject var bidManager = BidManager()
-    @State private var isLoggedIn = false // 👈 Track login state
+    @AppStorage("isLoggedIn") private var isLoggedIn = false  // ✅ Persistent login state
 
     init() {
         // Load all persisted data (bids, cart, wishlist) at startup
