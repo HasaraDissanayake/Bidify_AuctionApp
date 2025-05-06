@@ -8,30 +8,33 @@
 import SwiftUI
 
 struct UserProfileView: View {
-    // Retrieve current logged-in username
     private var currentUser: String? {
         UserDefaults.standard.string(forKey: "currentUser")
     }
 
-    // Load profile data for current user
+    private var profile: [String: String]? {
+        guard let username = currentUser else { return nil }
+        return UserDefaults.standard.dictionary(forKey: "user_\(username)") as? [String: String]
+    }
+
     private var fullName: String {
-        UserDefaults.standard.string(forKey: "fullName_\(currentUser ?? "")") ?? "Not Available"
+        profile?["fullName"] ?? "Not Available"
     }
 
     private var address: String {
-        UserDefaults.standard.string(forKey: "address_\(currentUser ?? "")") ?? "Not Available"
+        profile?["address"] ?? "Not Available"
     }
 
     private var idNumber: String {
-        UserDefaults.standard.string(forKey: "idNumber_\(currentUser ?? "")") ?? "Not Available"
+        profile?["idNumber"] ?? "Not Available"
     }
 
     private var mobileNumber: String {
-        UserDefaults.standard.string(forKey: "mobileNumber_\(currentUser ?? "")") ?? "Not Available"
+        profile?["mobileNumber"] ?? "Not Available"
     }
 
     private var email: String {
-        UserDefaults.standard.string(forKey: "email_\(currentUser ?? "")") ?? "Not Available"
+        profile?["email"] ?? "Not Available"
     }
 
     var body: some View {
@@ -41,20 +44,17 @@ struct UserProfileView: View {
                     ScrollViewReader { proxy in
                         ScrollView {
                             VStack(spacing: 20) {
-                                // Profile Title
                                 Text("Profile")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.teal)
                                     .padding(.top)
 
-                                // Profile Photo
                                 Image(systemName: "person.crop.circle.fill")
                                     .resizable()
                                     .frame(width: 120, height: 120)
                                     .foregroundColor(.black)
 
-                                // Username Box
                                 Text(username)
                                     .font(.headline)
                                     .bold()
@@ -64,7 +64,6 @@ struct UserProfileView: View {
                                     .foregroundColor(.white)
                                     .cornerRadius(8)
 
-                                // Scroll Down Button
                                 Button(action: {
                                     withAnimation {
                                         proxy.scrollTo("detailsSection", anchor: .top)
@@ -80,7 +79,6 @@ struct UserProfileView: View {
                                     .foregroundColor(.teal)
                                 }
 
-                                // User Details
                                 VStack(spacing: 10) {
                                     DetailBox(label: "Full Name", value: fullName)
                                     DetailBox(label: "NIC Number", value: idNumber)
@@ -90,7 +88,6 @@ struct UserProfileView: View {
                                 }
                                 .id("detailsSection")
 
-                                // Help Center
                                 VStack(alignment: .center, spacing: 10) {
                                     Text("Help Center")
                                         .font(.title2)
@@ -112,27 +109,11 @@ struct UserProfileView: View {
                                 .cornerRadius(10)
                             }
                             .padding()
-                            .padding(.bottom, 80) // Space for footer
+                            .padding(.bottom, 80)
                         }
                     }
 
-                    Divider()
-
-                    // Footer Section
-                    HStack {
-                        FooterButton(icon: "house.fill", label: "Home")
-                        Spacer()
-                        FooterButton(icon: "chart.bar.fill", label: "Dashboard")
-                        Spacer()
-                        FooterButton(icon: "heart.fill", label: "Wishlist")
-                        Spacer()
-                        FooterButton(icon: "checkmark.circle.fill", label: "Completed")
-                        Spacer()
-                        FooterButton(icon: "gearshape.fill", label: "Settings")
-                    }
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .foregroundColor(.teal)
+                    
 
                 } else {
                     Text("No user is currently logged in.")
@@ -146,7 +127,6 @@ struct UserProfileView: View {
     }
 }
 
-// MARK: - DetailBox View
 struct DetailBox: View {
     var label: String
     var value: String
@@ -164,25 +144,8 @@ struct DetailBox: View {
     }
 }
 
-// MARK: - FooterButton View
-struct FooterButton: View {
-    var icon: String
-    var label: String
 
-    var body: some View {
-        Button(action: {
-            // Navigation placeholder
-        }) {
-            VStack {
-                Image(systemName: icon)
-                Text(label)
-                    .font(.footnote)
-            }
-        }
-    }
-}
 
-// MARK: - Preview
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
         UserProfileView()

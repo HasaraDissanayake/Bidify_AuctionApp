@@ -12,27 +12,30 @@ struct MainTabView: View {
         TabView {
             HomeContentView()
                 .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
+                    Label("Home", systemImage: "house.fill")
                 }
 
             WishlistView()
                 .tabItem {
-                    Image(systemName: "heart.fill")
-                    Text("Wishlist")
+                    Label("Wishlist", systemImage: "heart.fill")
                 }
 
             DashboardView()
                 .tabItem {
-                    Image(systemName: "chart.bar.fill")
-                    Text("Dashboard")
+                    Label("Dashboard", systemImage: "chart.bar.fill")
+                }
+
+            CompletedBidsView()
+                .tabItem {
+                    Label("Completed", systemImage: "checkmark.circle.fill")
                 }
 
             UserProfileView()
                 .tabItem {
-                    Image(systemName: "gearshape.fill")
-                    Text("Settings")
+                    Label("Settings", systemImage: "gearshape.fill")
                 }
         }
+        .accentColor(.teal) // Optional: to set the selected tab color
     }
 }
+

@@ -14,7 +14,8 @@ struct ItemContentView: View {
     @State private var userBid: Double?
     @EnvironmentObject var bidManager: BidManager
     @State private var showAddToCartAlert = false
-    @State private var navigateToBidView = false // new state to trigger navigation
+    @State private var navigateToBidView = false
+    @State private var isWishlisted = false // ✅ NEW state to toggle heart icon
 
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -60,17 +61,42 @@ struct ItemContentView: View {
 
                     Spacer()
 
-                    Button(action: {
-                        bidManager.addToCart(item)
-                        showAddToCartAlert = true
-                    }) {
-                        Image(systemName: "cart.badge.plus")
-                            .font(.system(size: 22))
-                            .foregroundColor(.teal)
-                            .padding(10)
-                            .background(Color.white)
-                            .clipShape(Circle())
-                            .shadow(radius: 2)
+                    VStack(spacing: 10) {
+                        // Cart Button
+                        Button(action: {
+                            bidManager.addToCart(item)
+                            showAddToCartAlert = true
+                        }) {
+                            Image(systemName: "cart.badge.plus")
+                                .font(.system(size: 22))
+                                .foregroundColor(.teal)
+                                .padding(10)
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                .shadow(radius: 2)
+                        }
+
+                        // Heart Button ✅
+                        Button(action: {
+                            if bidManager.wishlistItems.contains(where: { $0.id == item.id }) {
+                                bidManager.removeFromWishlist(item)
+                                isWishlisted = false
+                            } else {
+                                bidManager.addToWishlist(item)
+                                isWishlisted = true
+                            }
+                        }) {
+                            Image(systemName: isWishlisted ? "heart.fill" : "heart")
+                                .font(.system(size: 22))
+                                .foregroundColor(isWishlisted ? .red : .teal)
+                                .padding(10)
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                .shadow(radius: 2)
+                        }
+                        .onAppear {
+                            isWishlisted = bidManager.wishlistItems.contains(where: { $0.id == item.id })
+                        }
                     }
                 }
 

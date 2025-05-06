@@ -134,6 +134,9 @@ struct UserProfileCreation: View {
         var usernames = UserDefaults.standard.stringArray(forKey: "Usernames") ?? []
         usernames.append(username)
         UserDefaults.standard.set(usernames, forKey: "Usernames")
+
+        // ✅ Save current user for profile view
+        UserDefaults.standard.set(username, forKey: "currentUser")
     }
 
     func clearForm() {
@@ -188,4 +191,3 @@ class KeychainHelper {
         return nil
     }
 }
-
